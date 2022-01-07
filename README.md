@@ -1,5 +1,5 @@
 # UCB SICP Fall 2020
-Labs, Homework and Projects from UC Berkeley, CS61A: Structure and Interpretation of Computer Programs
+##Labs, Homework and Projects from UC Berkeley, CS61A: Structure and Interpretation of Computer Programs
 
   In order to deepen my understanding of python and computer programming, I decided to take the full Fall 2020 CS61A course taught by John DeNiro at UC Berkeley. 
 The content of this course is available [here](https://inst.eecs.berkeley.edu/~cs61a/fa20/).
