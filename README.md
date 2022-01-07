@@ -11,4 +11,4 @@ problems.
    Interestingly, this iteration of the course was offered online/remote ONLY Fall 2020. Therefore, I believe I am having a similar learning experience to students 
 who were formally enrolled in this 1500+ student course during the fall of 2020. 
 
-
+The purpose of this repo is to showcase the work I have completed as part of this course.
