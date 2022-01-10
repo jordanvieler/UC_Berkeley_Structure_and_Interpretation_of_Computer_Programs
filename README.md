@@ -11,6 +11,6 @@ problems.
    Interestingly, this iteration of the course was offered online/remote ONLY Fall 2020. Therefore, I believe I am having a similar learning experience to students 
 who were formally enrolled in this 1500+ student course during the fall of 2020.
 
-  This repo contains the [homework](), [labs](), and [projects]() that I have completed as part of this course.
+  This repo contains the [homework](https://github.com/jordanvieler/UC_Berkeley_Structure_and_Interpretation_of_Computer_Programs/tree/main/Homework), [labs](https://github.com/jordanvieler/UC_Berkeley_Structure_and_Interpretation_of_Computer_Programs/tree/main/Labs), and [projects](https://github.com/jordanvieler/UC_Berkeley_Structure_and_Interpretation_of_Computer_Programs/tree/main/Projects) that I have completed as part of this course.
 
 
