@@ -9,4 +9,5 @@ I have been watching all lectures and QAs, and taking the available midterms. To
 problems.
 
    Interestingly, this iteration of the course was offered online/remote ONLY Fall 2020. Therefore, I believe I am having a similar learning experience to students 
-who were formally enrolled in this 1500+ student course during the fall of 2020. 
+who were formally enrolled in this 1500+ student course during the fall of 2020.
+
