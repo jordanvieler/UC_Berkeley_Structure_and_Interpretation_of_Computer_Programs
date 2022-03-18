@@ -1,5 +1,6 @@
 from operator import add, sub
 
+
 def a_plus_abs_b(a, b):
     """Return a+abs(b), but without calling abs.
 
@@ -37,8 +38,8 @@ def two_of_three(x, y, z):
     >>> [type(x).__name__ for x in ast.parse(inspect.getsource(two_of_three)).body[0].body]
     ['Expr', 'Return']
     """
-    c = max(x,y,z)
-    return x*x+y*y+z*z-c*c
+    c = max(x, y, z)
+    return x * x + y * y + z * z - c * c
 
 
 def largest_factor(n):
@@ -51,10 +52,9 @@ def largest_factor(n):
     >>> largest_factor(13) # factor is 1 since 13 is prime
     1
     """
-    for i in reversed(range(0,n)):
-        if n%i==0:
+    for i in reversed(range(0, n)):
+        if n % i == 0:
             return i
-    
 
 
 def if_function(condition, true_result, false_result):
@@ -88,6 +88,7 @@ def with_if_statement():
     else:
         return false_func()
 
+
 def with_if_function():
     """
     >>> result = with_if_function()
@@ -98,11 +99,14 @@ def with_if_function():
     """
     return if_function(cond(), true_func(), false_func())
 
+
 def cond():
     return False
 
+
 def true_func():
     print(42)
+
 
 def false_func():
     print(47)
@@ -127,10 +131,9 @@ def hailstone(n):
     while n != 1:
         steps = steps + 1
         print(n)
-        if n%2==0:
-            n = n//2
+        if n % 2 == 0:
+            n = n // 2
         else:
-            n = n*3+1
+            n = n * 3 + 1
     print(n)
     return steps
-

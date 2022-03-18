@@ -19,20 +19,20 @@ def roll_dice(num_rolls, dice=six_sided):
     dice:       A function that simulates a single dice roll outcome.
     """
     # These assert statements ensure that num_rolls is a positive integer.
-    assert type(num_rolls) == int, 'num_rolls must be an integer.'
-    assert num_rolls > 0, 'Must roll at least once.'
+    assert type(num_rolls) == int, "num_rolls must be an integer."
+    assert num_rolls > 0, "Must roll at least once."
     i = 0
     sum = 0
-    while i<num_rolls:
+    while i < num_rolls:
         roll = dice()
-        i+=1
+        i += 1
         if roll == 1:
-            while i<num_rolls:
+            while i < num_rolls:
                 dice()
-                i+=1
+                i += 1
             return 1
         else:
-            sum+=roll
+            sum += roll
     return sum
 
 
@@ -41,15 +41,15 @@ def free_bacon(score):
 
     score:  The opponent's current score.
     """
-    assert score < 100, 'The game should be over.'
+    assert score < 100, "The game should be over."
     pi = FIRST_101_DIGITS_OF_PI
 
     # Trim pi to only (score + 1) digit(s)
-    trims = 100-score
-    i=0
-    while i<trims:
-        pi = pi//10
-        i+=1
+    trims = 100 - score
+    i = 0
+    while i < trims:
+        pi = pi // 10
+        i += 1
     return pi % 10 + 3
 
 
@@ -62,10 +62,10 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
     dice:            A function that simulates a single dice roll outcome.
     """
     # Leave these assert statements here; they help check for errors.
-    assert type(num_rolls) == int, 'num_rolls must be an integer.'
-    assert num_rolls >= 0, 'Cannot roll a negative number of dice in take_turn.'
-    assert num_rolls <= 10, 'Cannot roll more than 10 dice.'
-    assert opponent_score < 100, 'The game should be over.'
+    assert type(num_rolls) == int, "num_rolls must be an integer."
+    assert num_rolls >= 0, "Cannot roll a negative number of dice in take_turn."
+    assert num_rolls <= 10, "Cannot roll more than 10 dice."
+    assert opponent_score < 100, "The game should be over."
     if num_rolls == 0:
         return free_bacon(opponent_score)
     else:
@@ -74,8 +74,9 @@ def take_turn(num_rolls, opponent_score, dice=six_sided):
 
 def extra_turn(player_score, opponent_score):
     """Return whether the player gets an extra turn."""
-    return (pig_pass(player_score, opponent_score) or
-            swine_align(player_score, opponent_score))
+    return pig_pass(player_score, opponent_score) or swine_align(
+        player_score, opponent_score
+    )
 
 
 def swine_align(player_score, opponent_score):
@@ -93,9 +94,9 @@ def swine_align(player_score, opponent_score):
         i = 2
         gcd = 1
         while i <= player_score and i <= opponent_score:
-            if player_score%i == 0 and opponent_score%i == 0:
+            if player_score % i == 0 and opponent_score % i == 0:
                 gcd = i
-            i+=1
+            i += 1
         if gcd >= 10:
             return True
         else:
@@ -124,7 +125,7 @@ def pig_pass(player_score, opponent_score):
     if -3 < player_score - opponent_score < 0:
         return True
     else:
-        return False 
+        return False
 
 
 def other(who):
@@ -143,8 +144,15 @@ def silence(score0, score1):
     return silence
 
 
-def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
-         goal=GOAL_SCORE, say=silence):
+def play(
+    strategy0,
+    strategy1,
+    score0=0,
+    score1=0,
+    dice=six_sided,
+    goal=GOAL_SCORE,
+    say=silence,
+):
     """Simulate a game and return the final scores of both players, with Player
     0's score first, and Player 1's score second.
 
@@ -163,14 +171,14 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
     who = 0  # Who is about to take a turn, 0 (first) or 1 (second)
     while score0 < goal and score1 < goal:
         if who:
-            score1 += take_turn(strategy1(score1, score0),score0,dice)
+            score1 += take_turn(strategy1(score1, score0), score0, dice)
             take_extra_turn = extra_turn(score1, score0)
         else:
-            score0 += take_turn(strategy0(score0,score1),score1,dice)
+            score0 += take_turn(strategy0(score0, score1), score1, dice)
             take_extra_turn = extra_turn(score0, score1)
         if not take_extra_turn:
-           who = other(who)
-    # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
+            who = other(who)
+        # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
         say = say(score0, score1)
     return score0, score1
 
@@ -199,6 +207,7 @@ def announce_lead_changes(last_leader=None):
     >>> f5 = f4(15, 13)
     Player 0 takes the lead by 2
     """
+
     def say(score0, score1):
         if score0 > score1:
             leader = 0
@@ -207,8 +216,9 @@ def announce_lead_changes(last_leader=None):
         else:
             leader = None
         if leader != None and leader != last_leader:
-            print('Player', leader, 'takes the lead by', abs(score0 - score1))
+            print("Player", leader, "takes the lead by", abs(score0 - score1))
         return announce_lead_changes(leader)
+
     return say
 
 
@@ -228,8 +238,10 @@ def both(f, g):
     Player 0 now has 10 and Player 1 now has 17
     Player 1 takes the lead by 7
     """
+
     def say(score0, score1):
         return both(f(score0, score1), g(score0, score1))
+
     return say
 
 
@@ -252,7 +264,8 @@ def announce_highest(who, last_score=0, running_high=0):
     >>> f7 = f6(21, 77)
     30 point(s)! The most yet for Player 1
     """
-    assert who == 0 or who == 1, 'The who argument should indicate a player.'
+    assert who == 0 or who == 1, "The who argument should indicate a player."
+
     def say(score0, score1):
         if who:
             current_score = score1
@@ -265,6 +278,7 @@ def announce_highest(who, last_score=0, running_high=0):
         else:
             high = running_high
         return announce_highest(who, last_score=current_score, running_high=high)
+
     return say
 
 
@@ -286,8 +300,10 @@ def always_roll(n):
     >>> strategy(99, 99)
     5
     """
+
     def strategy(score, opponent_score):
         return n
+
     return strategy
 
 
@@ -303,13 +319,15 @@ def make_averaged(original_function, trials_count=1000):
     >>> averaged_dice()
     3.0
     """
+
     def new_func(*args):
         i = 0
         sum = 0
         while i < trials_count:
             sum += original_function(*args)
-            i+=1
-        return sum/trials_count
+            i += 1
+        return sum / trials_count
+
     return new_func
 
 
@@ -325,13 +343,13 @@ def max_scoring_num_rolls(dice=six_sided, trials_count=1000):
     i = 1
     max_score = 0
     max_dice = 0
-    roll_average = make_averaged(roll_dice,trials_count)
+    roll_average = make_averaged(roll_dice, trials_count)
     while i <= 10:
         avg_points = roll_average(i, dice)
         if avg_points > max_score:
             max_dice = i
             max_score = avg_points
-        i+=1
+        i += 1
     return max_dice
 
 
@@ -358,22 +376,21 @@ def run_experiments():
     """Run a series of strategy experiments and report results."""
     if True:  # Change to False when done finding max_scoring_num_rolls
         six_sided_max = max_scoring_num_rolls(six_sided)
-        print('Max scoring num rolls for six-sided dice:', six_sided_max)
+        print("Max scoring num rolls for six-sided dice:", six_sided_max)
 
     if True:  # Change to True to test always_roll(8)
-        print('always_roll(8) win rate:', average_win_rate(always_roll(8)))
+        print("always_roll(8) win rate:", average_win_rate(always_roll(8)))
 
     if False:  # Change to True to test bacon_strategy
-        print('bacon_strategy win rate:', average_win_rate(bacon_strategy))
+        print("bacon_strategy win rate:", average_win_rate(bacon_strategy))
 
     if False:  # Change to True to test extra_turn_strategy
-        print('extra_turn_strategy win rate:', average_win_rate(extra_turn_strategy))
+        print("extra_turn_strategy win rate:", average_win_rate(extra_turn_strategy))
 
     if False:  # Change to True to test final_strategy
-        print('final_strategy win rate:', average_win_rate(final_strategy))
+        print("final_strategy win rate:", average_win_rate(final_strategy))
 
     "*** You may add additional experiments as you wish ***"
-
 
 
 def bacon_strategy(score, opponent_score, cutoff=8, num_rolls=6):
@@ -391,7 +408,7 @@ def extra_turn_strategy(score, opponent_score, cutoff=8, num_rolls=6):
     rolls 0 dice if it gives at least CUTOFF points and does not give an extra turn.
     Otherwise, it rolls NUM_ROLLS.
     """
-    if extra_turn(free_bacon(opponent_score)+score, opponent_score):
+    if extra_turn(free_bacon(opponent_score) + score, opponent_score):
         return 0
     else:
         return bacon_strategy(score, opponent_score, cutoff, num_rolls)
@@ -402,7 +419,7 @@ def final_strategy(score, opponent_score):
     *** YOUR DESCRIPTION HERE ***
     """
     expected_roll_value = 3.5
-    if (free_bacon(opponent_score)+score) >= 100:
+    if (free_bacon(opponent_score) + score) >= 100:
         return 0
     elif score + 3.5 >= 100:
         return 1
@@ -410,6 +427,7 @@ def final_strategy(score, opponent_score):
         return 2
     else:
         return extra_turn_strategy(score, opponent_score, cutoff=14, num_rolls=4)
+
 
 ##########################
 # Command Line Interface #
@@ -423,9 +441,11 @@ def final_strategy(score, opponent_score):
 def run(*args):
     """Read in the command-line argument and calls corresponding functions."""
     import argparse
+
     parser = argparse.ArgumentParser(description="Play Hog")
-    parser.add_argument('--run_experiments', '-r', action='store_true',
-                        help='Runs strategy experiments')
+    parser.add_argument(
+        "--run_experiments", "-r", action="store_true", help="Runs strategy experiments"
+    )
 
     args = parser.parse_args()
 

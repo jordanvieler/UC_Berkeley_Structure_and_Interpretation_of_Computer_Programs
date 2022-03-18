@@ -1,4 +1,4 @@
-HW_SOURCE_FILE=__file__
+HW_SOURCE_FILE = __file__
 
 
 def num_eights(x):
@@ -25,8 +25,7 @@ def num_eights(x):
     if x == 0:
         return 0
     else:
-        return (x%10 == 8) + num_eights(x//10)
-
+        return (x % 10 == 8) + num_eights(x // 10)
 
 
 def pingpong(n):
@@ -61,14 +60,16 @@ def pingpong(n):
     >>> check(HW_SOURCE_FILE, 'pingpong', ['Assign', 'AugAssign'])
     True
     """
-    assert n > 0, 'only positive values are allowed'
+    assert n > 0, "only positive values are allowed"
+
     def pingpong_helper(i, pingpong_number, add):
         if i == n:
             return pingpong_number
-        elif i%8==0 or num_eights(i)!=0:
-            return pingpong_helper(i+1,pingpong_number+(add*-1),add*-1)
+        elif i % 8 == 0 or num_eights(i) != 0:
+            return pingpong_helper(i + 1, pingpong_number + (add * -1), add * -1)
         else:
-            return pingpong_helper(i+1, pingpong_number+add,add)
+            return pingpong_helper(i + 1, pingpong_number + add, add)
+
     return pingpong_helper(1, 1, 1)
 
 
@@ -102,11 +103,11 @@ def missing_digits(n):
     if n < 10:
         return 0
     else:
-        return max(0,(n%10-(n//10)%10)-1) + missing_digits(n//10)
+        return max(0, (n % 10 - (n // 10) % 10) - 1) + missing_digits(n // 10)
 
 
 def next_largest_coin(coin):
-    """Return the next coin. 
+    """Return the next coin.
     >>> next_largest_coin(1)
     5
     >>> next_largest_coin(5)
@@ -135,22 +136,27 @@ def count_coins(total):
     242
     >>> from construct_check import check
     >>> # ban iteration
-    >>> check(HW_SOURCE_FILE, 'count_coins', ['While', 'For'])                                          
+    >>> check(HW_SOURCE_FILE, 'count_coins', ['While', 'For'])
     True
     """
+
     def count_coins_helper(ammount, current_coin):
         if ammount == 0:
             return 1
-        elif current_coin == None or ammount-current_coin < 0:
+        elif current_coin == None or ammount - current_coin < 0:
             return 0
         else:
-            with_current_coin = count_coins_helper(ammount-current_coin,current_coin)
-            with_next_coin = count_coins_helper(ammount, next_largest_coin(current_coin))
-            return with_current_coin+with_next_coin
+            with_current_coin = count_coins_helper(ammount - current_coin, current_coin)
+            with_next_coin = count_coins_helper(
+                ammount, next_largest_coin(current_coin)
+            )
+            return with_current_coin + with_next_coin
+
     return count_coins_helper(total, 1)
 
 
 from operator import sub, mul
+
 
 def make_anonymous_factorial():
     """Return the value of an expression that computes factorial.
@@ -162,4 +168,6 @@ def make_anonymous_factorial():
     >>> check(HW_SOURCE_FILE, 'make_anonymous_factorial', ['Assign', 'AugAssign', 'FunctionDef', 'Recursion'])
     True
     """
-    return lambda n: (lambda f: f(n,f))(lambda n,fact: 1 if n == 1 else n * fact(n - 1, fact))
+    return lambda n: (lambda f: f(n, f))(
+        lambda n, fact: 1 if n == 1 else n * fact(n - 1, fact)
+    )
