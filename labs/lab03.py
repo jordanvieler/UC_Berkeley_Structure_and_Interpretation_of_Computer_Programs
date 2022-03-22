@@ -1,11 +1,11 @@
 LAB_SOURCE_FILE = __file__
 
 
-
 this_file = __file__
 
+
 def skip_add(n):
-    """ Takes a number n and returns n + n-2 + n-4 + n-6 + ... + 0.
+    """Takes a number n and returns n + n-2 + n-4 + n-6 + ... + 0.
 
     >>> skip_add(5)  # 5 + 3 + 1 + 0
     9
@@ -18,8 +18,8 @@ def skip_add(n):
     ...       ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"    
-    return sum(list(range(n,0,-2))) 
+    "*** YOUR CODE HERE ***"
+    return sum(list(range(n, 0, -2)))
 
 
 def summation(n, term):
@@ -45,7 +45,7 @@ def summation(n, term):
     if n == 1:
         return term(n)
     else:
-        return term(n)+summation(n-1,term)
+        return term(n) + summation(n - 1, term)
 
 
 def paths(m, n):
@@ -65,8 +65,7 @@ def paths(m, n):
     if m == 1 or n == 1:
         return 1
     else:
-        return paths(m-1,n)+paths(m,n-1)
-
+        return paths(m - 1, n) + paths(m, n - 1)
 
 
 def max_subseq(n, t):
@@ -119,7 +118,7 @@ def max_subseq(n, t):
     elif n < 10:
         return n
     else:
-        return max(max_subseq(n//10,t-1)*10+(n%10),max_subseq(n//10,t))
+        return max(max_subseq(n // 10, t - 1) * 10 + (n % 10), max_subseq(n // 10, t))
 
 
 def add_chars(w1, w2):
@@ -152,7 +151,6 @@ def add_chars(w1, w2):
     if not w1:
         return w2
     elif w1[0] == w2[0]:
-        return add_chars(w1[1:],w2[1:])
+        return add_chars(w1[1:], w2[1:])
     else:
         return w2[0] + add_chars(w1, w2[1:])
-

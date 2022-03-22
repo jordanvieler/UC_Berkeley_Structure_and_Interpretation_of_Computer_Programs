@@ -5,6 +5,5 @@ def twenty_twenty():
     >>> twenty_twenty()
     2020
     """
-    a = 2020%69
-    return (29*69)+a
-
+    a = 2020 % 69
+    return (29 * 69) + a
