@@ -19,7 +19,7 @@ def choose(paragraphs, select, k):
     if k < len(valid_paragraphs):
         return valid_paragraphs[k]
     else:
-        return ''
+        return ""
 
 
 def about(topic):
@@ -32,7 +32,7 @@ def about(topic):
     >>> choose(['Cute Dog!', 'That is a cat.', 'Nice pup.'], about_dogs, 1)
     'Nice pup.'
     """
-    assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
+    assert all([lower(x) == x for x in topic]), "topics should be lowercase."
 
     def select(paragraph):
         clean_paragraph = lower(remove_punctuation(paragraph))
@@ -41,6 +41,7 @@ def about(topic):
             if t in word_list:
                 return True
         return False
+
     return select
 
 
@@ -68,15 +69,15 @@ def accuracy(typed, reference):
     if total == 0:
         return 0.0
     for t, r in zip(typed_words, reference_words):
-        correct += (t == r)
-    return (correct/total)*100
+        correct += t == r
+    return (correct / total) * 100
 
 
 def wpm(typed, elapsed):
     """Return the words-per-minute (WPM) of the TYPED string."""
-    assert elapsed > 0, 'Elapsed time must be positive'
-    words = len(typed)/5
-    return words/(elapsed/60)
+    assert elapsed > 0, "Elapsed time must be positive"
+    words = len(typed) / 5
+    return words / (elapsed / 60)
 
 
 def autocorrect(user_word, valid_words, diff_function, limit):
@@ -102,34 +103,25 @@ def shifty_shifts(start, goal, limit):
     if limit < 0:
         return 1
     if start == "" or goal == "":
-        return abs(len(start)-len(goal))
-    char_zero_diff = (start[0]!=goal[0])
-    return char_zero_diff + shifty_shifts(start[1:],goal[1:],limit-char_zero_diff)
+        return abs(len(start) - len(goal))
+    char_zero_diff = start[0] != goal[0]
+    return char_zero_diff + shifty_shifts(start[1:], goal[1:], limit - char_zero_diff)
 
 
 def pawssible_patches(start, goal, limit):
     """A diff function that computes the edit distance from START to GOAL."""
-    assert False, 'Remove this line'
-
-    if ______________:  # Fill in the condition
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-
-    elif ___________:  # Feel free to remove or add additional cases
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-
+    if limit < 0:
+        return 1
+    elif start == "" or goal == "":
+        return abs(len(start) - len(goal))
     else:
-        add_diff = ...  # Fill in these lines
-        remove_diff = ...
-        substitute_diff = ...
-
-
-def final_diff(start, goal, limit):
-    """A diff function. If you implement this function, it will be used."""
-    assert False, 'Remove this line to use your final_diff function'
+        char_zero_diff = start[0] != goal[0]
+        add_diff = 1 + pawssible_patches(start, goal[1:], limit - 1)
+        remove_diff = 1 + pawssible_patches(start[1:], goal, limit - 1)
+        substitute_diff = char_zero_diff + pawssible_patches(
+            start[1:], goal[1:], limit - char_zero_diff
+        )
+        return min(add_diff, remove_diff, substitute_diff)
 
 
 ###########
@@ -140,13 +132,13 @@ def final_diff(start, goal, limit):
 def report_progress(typed, prompt, user_id, send):
     """Send a report of your id and progress so far to the multiplayer server."""
     correct = 0
-    for t,p in zip(typed,prompt):
-        if t==p:
-            correct+=1
+    for t, p in zip(typed, prompt):
+        if t == p:
+            correct += 1
         else:
             break
-    progress = correct/len(prompt)
-    send({"id":user_id, "progress":progress})
+    progress = correct / len(prompt)
+    send({"id": user_id, "progress": progress})
     return progress
 
 
@@ -154,10 +146,10 @@ def fastest_words_report(times_per_player, words):
     """Return a text description of the fastest words typed by each player."""
     game = time_per_word(times_per_player, words)
     fastest = fastest_words(game)
-    report = ''
+    report = ""
     for i in range(len(fastest)):
-        words = ','.join(fastest[i])
-        report += 'Player {} typed these fastest: {}\n'.format(i + 1, words)
+        words = ",".join(fastest[i])
+        report += "Player {} typed these fastest: {}\n".format(i + 1, words)
     return report
 
 
@@ -171,9 +163,10 @@ def time_per_word(times_per_player, words):
                           the player finished typing each word.
         words: a list of words, in the order they are typed.
     """
-    # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 9
+    times = [
+        [j - i for i, j in zip(times[:-1], times[1:])] for times in times_per_player
+    ]
+    return [words, times]
 
 
 def fastest_words(game):
@@ -184,25 +177,32 @@ def fastest_words(game):
     Returns:
         a list of lists containing which words each player typed fastest
     """
-    player_indices = range(len(all_times(game))
-                           )  # contains an *index* for each player
+    player_indices = range(len(all_times(game)))  # contains an *index* for each player
     # contains an *index* for each word
     word_indices = range(len(all_words(game)))
-    # BEGIN PROBLEM 10
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 10
+    words_per_player = [[] for _ in player_indices]
+    for i in word_indices:
+        fastest_time = time(game, 0, i)
+        player = 0
+        for j in player_indices:
+            player_time = time(game, j, i)
+            if player_time < fastest_time:
+                player = j
+                fastest_time = player_time
+        words_per_player[player].append(word_at(game, i))
+    return words_per_player
 
 
 def game(words, times):
     """A data abstraction containing all words typed and their times."""
-    assert all([type(w) == str for w in words]
-               ), 'words should be a list of strings'
-    assert all([type(t) == list for t in times]
-               ), 'times should be a list of lists'
-    assert all([isinstance(i, (int, float))
-               for t in times for i in t]), 'times lists should contain numbers'
-    assert all([len(t) == len(words) for t in times]
-               ), 'There should be one word per time.'
+    assert all([type(w) == str for w in words]), "words should be a list of strings"
+    assert all([type(t) == list for t in times]), "times should be a list of lists"
+    assert all(
+        [isinstance(i, (int, float)) for t in times for i in t]
+    ), "times lists should contain numbers"
+    assert all(
+        [len(t) == len(words) for t in times]
+    ), "There should be one word per time."
     return [words, times]
 
 
@@ -243,35 +243,38 @@ enable_multiplayer = False  # Change to True when you're ready to race.
 
 def run_typing_test(topics):
     """Measure typing speed and accuracy on the command line."""
-    paragraphs = lines_from_file('data/sample_paragraphs.txt')
-    def select(p): return True
+    paragraphs = lines_from_file("data/sample_paragraphs.txt")
+
+    def select(p):
+        return True
+
     if topics:
         select = about(topics)
     i = 0
     while True:
         reference = choose(paragraphs, select, i)
         if not reference:
-            print('No more paragraphs about', topics, 'are available.')
+            print("No more paragraphs about", topics, "are available.")
             return
-        print('Type the following paragraph and then press enter/return.')
-        print('If you only type part of it, you will be scored only on that part.\n')
+        print("Type the following paragraph and then press enter/return.")
+        print("If you only type part of it, you will be scored only on that part.\n")
         print(reference)
         print()
 
         start = datetime.now()
         typed = input()
         if not typed:
-            print('Goodbye.')
+            print("Goodbye.")
             return
         print()
 
         elapsed = (datetime.now() - start).total_seconds()
         print("Nice work!")
-        print('Words per minute:', wpm(typed, elapsed))
-        print('Accuracy:        ', accuracy(typed, reference))
+        print("Words per minute:", wpm(typed, elapsed))
+        print("Accuracy:        ", accuracy(typed, reference))
 
-        print('\nPress enter/return for the next paragraph or type q to quit.')
-        if input().strip() == 'q':
+        print("\nPress enter/return for the next paragraph or type q to quit.")
+        if input().strip() == "q":
             return
         i += 1
 
@@ -280,9 +283,10 @@ def run_typing_test(topics):
 def run(*args):
     """Read in the command-line argument and calls corresponding functions."""
     import argparse
+
     parser = argparse.ArgumentParser(description="Typing Test")
-    parser.add_argument('topic', help="Topic word", nargs='*')
-    parser.add_argument('-t', help="Run typing test", action='store_true')
+    parser.add_argument("topic", help="Topic word", nargs="*")
+    parser.add_argument("-t", help="Run typing test", action="store_true")
 
     args = parser.parse_args()
     if args.t:
