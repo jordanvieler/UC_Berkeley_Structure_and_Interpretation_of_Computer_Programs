@@ -5,3 +5,4 @@
 - **Lab02:** Higher order functions and lambda expressions
 - **Lab03:** Recursion, Tree Recursion, and Python Lists
 - **Lab04:** Data Abstraction and Trees
+- **Lab05:** Nonlocal variables and Mutability
